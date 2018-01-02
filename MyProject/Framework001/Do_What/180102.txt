@@ -1,0 +1,13 @@
+Framework1일차
+
+까만화면 띄우기
+
+systemclass
+	private:
+	-inputclass*
+	-graphicsclass*
+
+객체해제는 소멸자가아닌 Shutdown()을 통해.
+	-소멸자가 호출될지 안될지 확실하지않아 따로만들어줌.
+
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-2-%EC%9C%88%EB%8F%84%EC%9A%B0%EC%99%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EB%A7%8C%EB%93%A4%EA%B8%B0?category=692082
