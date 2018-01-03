@@ -1,0 +1,22 @@
+Framework 2일차
+11:00~13:00
+읽으면서 코드작성
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-2-DirectX-11-%EC%B4%88%EA%B8%B0%ED%99%94%ED%95%98%EA%B8%B0?category=692082
+
+13:00~13:30
+debug error
+abort() has been called
+D3DClass->Initialize()부분에서 빠뜨린게 있어서 추가
+성☆공
+
+13:30~14:00
+
+연습하기
+1. 코드를 재컴파일하고 실행 해 보십시오, 만약 이전 강좌를 보지 않았다면 Esc 버튼을 눌러 종료시키세요.
+2. graphicsclass.h의 풀스크린 전역 변수를 바꾸고 다시 컴파일 후 실행 해 보세요.
+3. GraphicsClass::Render()의 클리어 색상바꾸기.
+4. 비디오카드 이름과 메모리 크기를 외부 텍스트 파일에 쓰세요.
+
+14:00~16:00
+다시 읽으면서 코드작성
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-2-DirectX-11-%EC%B4%88%EA%B8%B0%ED%99%94%ED%95%98%EA%B8%B0?category=692082
