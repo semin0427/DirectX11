@@ -1,0 +1,8 @@
+Framework3일차
+
+11:00 ~ 15:30
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-4-%EB%B2%84%ED%8D%BC-%EC%89%90%EC%9D%B4%EB%8D%94-%EA%B7%B8%EB%A6%AC%EA%B3%A0-HLSL?category=692082
+
+color.vs / color.ps 어캐만드는거징
+==>텍스트파일로 작성해서 확장자 바꿈.
+==>파일은 찾는데 이걸 알맞게 해석하고있는 모르겠음.
