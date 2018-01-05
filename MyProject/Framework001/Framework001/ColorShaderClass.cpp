@@ -33,7 +33,7 @@ bool ColorShaderClass::Initialize(ID3D11Device* device, HWND hwnd)
 void ColorShaderClass::ShutDown()
 {
 	// 버텍스, 픽셀 쉐이더와 관련 오브젝트들을 정리.
-	ShutdownShader();
+	ShutDownShader();
 
 	return;
 }
@@ -167,7 +167,7 @@ bool ColorShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 	return true;
 }
 
-void ColorShaderClass::ShutdownShader()
+void ColorShaderClass::ShutDownShader()
 {
 	// 행렬 상수 버퍼 해제.
 	if (m_matrixBuffer)
