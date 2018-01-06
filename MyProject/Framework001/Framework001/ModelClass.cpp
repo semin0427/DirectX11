@@ -7,6 +7,7 @@ ModelClass::ModelClass()
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
 	m_Texture = 0;
+	m_model = 0;
 }
 
 ModelClass::ModelClass(const ModelClass& other)
@@ -17,9 +18,14 @@ ModelClass::~ModelClass()
 {
 }
 
-bool ModelClass::Initialize(ID3D11Device* device, WCHAR* textureFilename)
+bool ModelClass::Initialize(ID3D11Device* device, char* modelFilename, WCHAR* textureFilename)
 {
 	bool result;
+
+	// Load in the model data,
+	result = LoadModel(modelFilename);
+	if (!result)
+		return false;
 
 	//삼각형의 기하 정보를 가지고 있는 버텍스, 인덱스 버퍼를 초기화
 	result = InitializeBuffers(device);
@@ -41,6 +47,9 @@ void ModelClass::ShutDown()
 
 	//버텍스 인덱스버퍼 해제
 	ShutDownBuffers();
+
+	// Release the model data.
+	ReleaseModel();
 
 	return;
 }
@@ -70,12 +79,13 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 	HRESULT result;
+	int i;
 
-	//버텍스 배열의 정점갯수 설정.
-	m_vertexCount = 6;
+	////버텍스 배열의 정점갯수 설정.
+	//m_vertexCount = 6;
 
-	//인덱스 배열의 인덱스 수 설정.
-	m_indexCount = 6;
+	////인덱스 배열의 인덱스 수 설정.
+	//m_indexCount = 6;
 
 	//버텍스 배열생성.
 	vertices = new VertexType[m_vertexCount];
@@ -87,24 +97,41 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	if (!indices)
 		return false;
 
+	// Load the vertex array and index array with data.
+	for (i = 0; i<m_vertexCount; i++)
+	{
+		vertices[i].position = D3DXVECTOR3(m_model[i].x, m_model[i].y, m_model[i].z);
+		vertices[i].texture = D3DXVECTOR2(m_model[i].tu, m_model[i].tv);
+		vertices[i].normal = D3DXVECTOR3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
+
+		indices[i] = i;
+	}
+
 	// 버텍스 배열에 데이터를 넣음. 
+	/*
 	vertices[0].position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f); // 왼쪽 아래 
 	vertices[0].texture = D3DXVECTOR2(0.0f, 1.0f);
-	
+	vertices[0].normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+
 	vertices[1].position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f); 	// 왼쪽 위
 	vertices[1].texture = D3DXVECTOR2(0.5f, 0.0f);
+	vertices[1].normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 
 	vertices[2].position = D3DXVECTOR3(1.0f, 1.0f, 0.0f); 	// 오른쪽 위
 	vertices[2].texture = D3DXVECTOR2(1.0f, 1.0f);
+	vertices[2].normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 
 	vertices[3].position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f); // 왼쪽 아래 
 	vertices[3].texture = D3DXVECTOR2(0.0f, 1.0f);
+	vertices[3].normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 
 	vertices[4].position = D3DXVECTOR3(1.0f, 1.0f, 0.0f); 	// 오른쪽 위
 	vertices[4].texture = D3DXVECTOR2(0.5f, 1.0f);
+	vertices[4].normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 
 	vertices[5].position = D3DXVECTOR3(1.0f, -1.0f, 0.0f); // 오른쪽 아래 
 	vertices[5].texture = D3DXVECTOR2(1.0f, 1.0f);
+	vertices[5].normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	
 	// 인덱스 배열에 데이터를 넣음. 
 	indices[0] = 0; // 왼쪽 아래
@@ -113,49 +140,52 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	indices[3] = 3; // 왼쪽 아래
 	indices[4] = 4; // 오른쪽 위 
 	indices[5] = 5; // 오른쪽 아래
-					
+	*/
+
+
 	// 정적 정점 버퍼의 description을 작성.
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = 0; 
-	vertexBufferDesc.MiscFlags = 0; 
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
 	
 	// 버텍스 데이터(버텍스 배열)의 포인터를 subresource 구조체에 넣음. 
-	vertexData.pSysMem = vertices; vertexData.SysMemPitch = 0; 
-	vertexData.SysMemSlicePitch = 0; 
+	vertexData.pSysMem = vertices;
+	vertexData.SysMemPitch = 0;
+	vertexData.SysMemSlicePitch = 0;
 	
 	// 버텍스 버퍼를 생성.
-	result = device->CreateBuffer(&vertexBufferDesc, &vertexData, &m_vertexBuffer); 
-	if(FAILED(result)) 
-		return false; 
+	result = device->CreateBuffer(&vertexBufferDesc, &vertexData, &m_vertexBuffer);
+	if (FAILED(result))
+		return false;
 	
 	// 정적 인덱스 버퍼의 description을 작성. 
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount; 
+	indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	indexBufferDesc.CPUAccessFlags = 0;
-	indexBufferDesc.MiscFlags = 0; 
+	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;
 	
 	// 인덱스 데이터의 포인터를 subresource 구조체에 넣음. 
-	indexData.pSysMem = indices; 
-	indexData.SysMemPitch = 0; 
-	indexData.SysMemSlicePitch = 0; 
+	indexData.pSysMem = indices;
+	indexData.SysMemPitch = 0;
+	indexData.SysMemSlicePitch = 0;
 	
 	// 인덱스 버퍼 생성.
 	result = device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer);
-	if(FAILED(result)) 
-		return false; 
+	if (FAILED(result))
+		return false;
 
 	// 버텍스, 인덱스 버퍼가 생성되었으므로 배열을 해제. 
-	delete [] vertices; 
-	vertices = 0; 
-	
-	delete [] indices; 
+	delete[] vertices;
+	vertices = 0;
+
+	delete[] indices;
 	indices = 0;
-	
+
 	return true;
 }
 
@@ -225,6 +255,71 @@ void ModelClass::ReleaseTexture()
 		m_Texture->ShutDown();
 		delete m_Texture;
 		m_Texture = 0;
+	}
+
+	return;
+}
+
+bool ModelClass::LoadModel(char* filename)
+{
+	ifstream fin;
+	char input;
+	int i;
+
+	// Open the model file.
+	fin.open(filename);
+
+	// If it could not open the file then exit.
+	if (fin.fail())
+		return false;
+
+	// Read up to the value of vertex count.
+	fin.get(input);
+	while (input != ':')
+	{
+		fin.get(input);
+	}
+
+	// Read in the vertex count.
+	fin >> m_vertexCount;
+
+	// Set the number of indices to be the same as the vertex count.
+	m_indexCount = m_vertexCount;
+
+	// Create the model using the vertex count that was read in.
+	m_model = new ModelType[m_vertexCount];
+	if (!m_model)
+		return false;
+
+	// Read up to the beginning of the data.
+	fin.get(input);
+	while (input != ':')
+	{
+		fin.get(input);
+	}
+	fin.get(input);
+	fin.get(input);
+
+	// Read in the vertex data.
+	for (i = 0; i<m_vertexCount; i++)
+	{
+		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
+		fin >> m_model[i].tu >> m_model[i].tv;
+		fin >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
+	}
+
+	// Close the model file.
+	fin.close();
+
+	return true;
+}
+
+void ModelClass::ReleaseModel()
+{
+	if (m_model)
+	{
+		delete[] m_model;
+		m_model = 0;
 	}
 
 	return;

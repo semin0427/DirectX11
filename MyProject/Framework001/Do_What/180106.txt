@@ -1,0 +1,14 @@
+Framework5일차
+
+14:00~16:00
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-6-%EB%B6%84%EC%82%B0-%EC%A1%B0%EB%AA%85?category=692082
+
+연습하기
+1. 프로젝트를 재컴파일하고 보라색광에 텍스쳐가 적용된 회전하는 삼각형이 보이는지 확인하시고 Esc버튼으로 종료시키세요.
+2. shaderTexture를 더이상 사용하지않고 텍스쳐 없이 조명효과를 보기위해 픽셀 쉐이더에 "color = color * textureColor;" 부분을 주석처리 하세요.
+3. GraphicsClass의 m_Light->SetDiffuseColor 라인에서 빛 색상을 초록색으로 바꾸세요.
+4. 빛 방향을 X축의 -방향, +방향으로 바꾸어보세요. 또 회전 속도도 올려보세요.
+
+16:00~18:00
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-7-3D-%EB%AA%A8%EB%8D%B8-%EB%A0%8C%EB%8D%94%EB%A7%81?category=692082
+
