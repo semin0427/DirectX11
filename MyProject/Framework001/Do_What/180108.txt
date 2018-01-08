@@ -1,0 +1,11 @@
+Framwork7일차
+
+11:00~13:00
+MD5모델링 및 애니메이션 포팅.
+https://www.braynzarsoft.net/viewtutorial/q16390-27-loading-an-md5-model
+https://www.braynzarsoft.net/viewtutorial/q16390-28-skeletal-animation-based-on-the-md5-format
+==>감이 잘 안와서 일단 넘어감
+
+14:00~15:00
+2D렌더링
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-11-2D-%EB%A0%8C%EB%8D%94%EB%A7%81?category=692082
