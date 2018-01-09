@@ -40,7 +40,7 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 		return false;
 
 	// Initialize the font object.
-	result = m_Font->Initialize(device, "./Data/Font/FontData.txt", L"./Data/Font/arial.dds");
+	result = m_Font->Initialize(device, "./Data/Font/FontData.txt", L"./Data/Font/FontData.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the font object.", L"Error", MB_OK);

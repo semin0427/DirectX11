@@ -5,4 +5,4 @@ Framwork7일차
 http://www.rastertek.com/dx11tut12.html
 
 14:00~16:20
-textdata.dds-> 폰트같은데 못읽어옴..
+textdata.dds-> 폰트같은데 못읽음 다깨짐
