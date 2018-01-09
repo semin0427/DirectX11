@@ -1,0 +1,8 @@
+Framwork7일차
+텍스트
+
+11:00~13:00
+http://www.rastertek.com/dx11tut12.html
+
+14:00~16:20
+textdata.dds-> 폰트같은데 못읽어옴..
