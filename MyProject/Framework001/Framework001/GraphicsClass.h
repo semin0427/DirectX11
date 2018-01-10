@@ -35,19 +35,13 @@ public:
 
 	bool Initialize(int, int, HWND);
 	void ShutDown();
-	bool Frame();
 
-private:
-	bool Render(float);
+	bool Frame(int, int);
+	bool Render(float rotation);
 
 private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;
-	//ModelClass* m_Model;
-	//TextureShaderClass* m_TextureShader;
-	//LightShaderClass* m_LightShader;
-	//LightClass* m_Light;
-	//BitmapClass* m_Bitmap;
 	TextClass* m_Text;
 };
 

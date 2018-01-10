@@ -214,27 +214,21 @@ void GraphicsClass::ShutDown()
 }
 
 
-bool GraphicsClass::Frame()
+bool GraphicsClass::Frame(int mouseX, int mouseY)
 {
-	static float rotation = 0.0f;
-	float rotationSpd = 1.00f;
-
-	// Update the rotation variable each frame.
-	rotation += (float)D3DX_PI * 0.01f * rotationSpd;
-	if (rotation > 360.0f)
-	{
-		rotation -= 360.0f;
-	}
-
 	bool result;
 
-	result = Render(rotation);
-	
+	// Set the location of the mouse.
+	result = m_Text->SetMousePosition(mouseX, mouseY, m_D3D->GetDeviceContext());
 	if (!result)
 		return false;
 
+	// Set the position of the camera.
+	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+
 	return true;
 }
+
 
 
 bool GraphicsClass::Render(float rotation)

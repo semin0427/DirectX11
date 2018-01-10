@@ -1,0 +1,18 @@
+Framwork8일차
+인풋, 사운드
+
+11:00~13:00 - 인풋
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-13-Direct-%EC%9E%85%EB%A0%A5?category=692082
+어제했던 폰트가 깨져서 글자는 제대로 나오지않지만 마우스의 이동에따라 뭔가 변하고는 있음.
+
+
+14:00~16:20 - 사운드
+http://nobilitycat.tistory.com/entry/DirectX-11-Tutorials-14-Direct-%EC%82%AC%EC%9A%B4%EB%93%9C?category=692082
+
+SoundClass.cpp - 187Line
+if ((waveFileHeader.dataChunkId[0] != 'd') || (waveFileHeader.dataChunkId[1] != 'a') ||
+		(waveFileHeader.dataChunkId[2] != 't') || (waveFileHeader.dataChunkId[3] != 'a'))
+
+waveFileHeader에 LIST라는 글자가 들어가서 false반환.
+조건문을 바꿨더니 실행되면서 뭔가 소리는 나는데 준비한 사운드파일이랑은 상관없는 소리.\
+왜 저 조건문에 data라는 글자가 들어가야하는거징
